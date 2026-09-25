@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TABB · Mannschaftsspiele</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-block">
+      <div>
+        <div class="eyebrow">Tennisabteilung · SV Böblingen</div>
+        <img class="tabb-logo" src="tabb-logo.png" alt="TABB – Tennisabteilung der SV Böblingen">\n      <h1 id="headline">Mannschaftsspiele</h1>
+        <div id="displayDate" class="date"></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="accent-line"></div>
+
+  <main>
+    <section id="displayView">
+      <div class="intro-strip">
+        <div>
+          <strong>Herzlich willkommen auf unserer Anlage.</strong>
+          <span>Hier sehen Sie die heutigen Mannschaftsbegegnungen und Platzbelegungen.</span>
+        </div>
+        <div class="tennis-dot">●</div>
+      </div>
+      <div id="courtGrid" class="court-grid"></div>
+      <div id="emptyState" class="empty-state hidden">
+        <div class="ball">🎾</div>
+        <h2>Heute keine Begegnungen</h2>
+        <p>Für dieses Datum sind noch keine Spiele eingetragen.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="spielplan.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

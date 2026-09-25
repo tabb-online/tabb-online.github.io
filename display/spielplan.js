@@ -7,5 +7,6 @@ window.TABB_SPIELPLAN = {
     { court: 1, start: "09:00", end: "13:00", home: "Herren 40", away: "TC Musterstadt" },
     { court: 2, start: "10:00", end: "14:00", home: "Damen 30", away: "TV Beispielhausen" },
     { court: 4, start: "14:00", end: "18:00", home: "Junioren U15", away: "TC Sonnental" }
+    { court: 1, start: "14:00", end: "18:00", home: "TestEdit Herren 40", away: "TestEdit TC Musterstadt" },
   ]
 };

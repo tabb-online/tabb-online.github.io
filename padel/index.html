@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TABB Padel – Preisrechner</title>
+<style>
+:root{
+  --ink:#161616;
+  --muted:#666b70;
+  --line:#e3e6e8;
+  --soft:#f4f6f7;
+  --tabb-blue:#17649a;
+  --tabb-blue-dark:#0f4f7e;
+  --tabb-blue-light:#eaf3f9;
+  --white:#fff;
+  --shadow:0 12px 36px rgba(0,0,0,.08);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f2f3f4;
+  color:var(--ink);
+}
+.page{
+  max-width:1080px;
+  margin:0 auto;
+  padding:32px 18px 48px;
+}
+.hero{
+  background:var(--white);
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  margin-bottom:22px;
+}
+.hero-top{
+  min-height:190px;
+  padding:34px 38px;
+  display:flex;
+  align-items:flex-end;
+  position:relative;
+  background:
+    linear-gradient(120deg,rgba(14,15,16,.97),rgba(15,79,126,.91)),
+    repeating-linear-gradient(135deg,transparent 0 24px,rgba(255,255,255,.03) 24px 25px);
+}
+.hero-top:after{
+  content:"";
+  position:absolute;
+  right:-40px;
+  top:-50px;
+  width:250px;
+  height:250px;
+  border:2px solid rgba(255,255,255,.32);
+  border-radius:50%;
+  box-shadow:
+    0 0 0 34px rgba(23,100,154,.20),
+    0 0 0 70px rgba(255,255,255,.05);
+}
+.eyebrow{
+  color:#ffffff;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-weight:700;
+  font-size:12px;
+  margin-bottom:10px;
+}
+h1{
+  color:white;
+  font-size:clamp(32px,6vw,58px);
+  line-height:.98;
+  margin:0;
+  font-weight:800;
+  letter-spacing:-.03em;
+}
+.hero-sub{
+  color:#e2edf4;
+  margin-top:12px;
+  font-size:15px;
+}
+.content{
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:22px;
+}
+.card{
+  background:var(--white);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:24px;
+}
+.card h2{
+  margin:0 0 18px;
+  font-size:22px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+.field label{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  margin:0 0 7px;
+}
+input,select{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid #d6dce0;
+  border-radius:11px;
+  background:#fff;
+  color:var(--ink);
+  font-size:16px;
+  outline:none;
+}
+input:focus,select:focus{
+  border-color:var(--tabb-blue);
+  box-shadow:0 0 0 3px rgba(23,100,154,.14);
+}
+.sep{
+  height:1px;
+  background:var(--line);
+  margin:22px 0;
+}
+.players-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+}
+.players-head strong{font-size:16px}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:34px;
+  height:34px;
+  border-radius:999px;
+  background:var(--tabb-blue);
+  color:#fff;
+  font-weight:800;
+}
+.player-row{
+  display:grid;
+  grid-template-columns:38px 1fr 95px;
+  gap:10px;
+  align-items:center;
+  padding:9px 0;
+  border-bottom:1px solid #eef0f1;
+}
+.player-row:last-child{border-bottom:0}
+.num{
+  width:34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;
+  background:#161616;color:#fff;font-weight:700;
+}
+.price{
+  text-align:right;
+  font-weight:800;
+  white-space:nowrap;
+}
+.summary{
+  position:sticky;
+  top:18px;
+}
+.total-box{
+  background:linear-gradient(135deg,#161616,#0f4f7e);
+  color:#fff;
+  border-radius:16px;
+  padding:22px;
+  margin-bottom:16px;
+}
+.total-box .kicker{
+  color:#cbdce8;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+.total{
+  font-size:46px;
+  font-weight:800;
+  line-height:1;
+  margin-top:7px;
+}
+.detail{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px 16px;
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+}
+.detail:last-of-type{border-bottom:0}
+.detail span{color:var(--muted)}
+.detail strong{text-align:right}
+.rate-box{
+  background:var(--tabb-blue-light);
+  border:1px solid #c9deec;
+  border-radius:14px;
+  padding:15px;
+  margin-top:16px;
+  font-size:13px;
+  line-height:1.5;
+}
+.rate-box b{color:var(--tabb-blue-dark)}
+.legend{
+  margin-top:18px;
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.55;
+}
+.legend strong{color:var(--ink)}
+.warning{
+  display:none;
+  margin-top:14px;
+  padding:12px 14px;
+  border-radius:11px;
+  background:#fff3f3;
+  border:1px solid #efcccc;
+  color:#9a2727;
+  font-size:13px;
+}
+.footer{
+  text-align:center;
+  color:#8a9094;
+  font-size:12px;
+  margin-top:20px;
+}
+@media(max-width:780px){
+  .content{grid-template-columns:1fr}
+  .summary{position:static}
+  .hero-top{padding:28px 24px;min-height:165px}
+}
+@media(max-width:520px){
+  .grid{grid-template-columns:1fr}
+  .page{padding:12px 10px 28px}
+  .card{padding:18px}
+  .player-row{grid-template-columns:34px 1fr 82px}
+  .total{font-size:40px}
+}
+
+#countMenu button{
+  display:block;
+  width:100%;
+  padding:10px 12px;
+  border:0;
+  background:#fff;
+  text-align:left;
+  font-size:16px;
+  cursor:pointer;
+}
+#countMenu button:hover{
+  background:var(--tabb-blue-light);
+}
+
+</style>
+</head>
+<body>
+<div class="page">
+  <section class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="eyebrow">TABB · PADEL</div>
+        <h1>Padel<br>Preisrechner</h1>
+        <div class="hero-sub">Schnell sehen, was eine Runde kostet – pro Platz / pro Spieler.</div>
+      </div>
+    </div>
+  </section>
+
+  <main class="content">
+    <section class="card">
+      <h2>Buchung</h2>
+      <div class="grid">
+        <div class="field">
+          <label for="date">Datum</label>
+          <div style="position:relative">
+          <input id="dateDisplay" type="text" value="" readonly style="padding-right:44px;cursor:pointer">
+          <span aria-hidden="true"
+                style="position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:19px;pointer-events:none">📅</span>
+          <input id="date" type="date" aria-label="Datum auswählen"
+                 style="position:absolute;right:0;top:0;width:44px;height:100%;opacity:0;cursor:pointer">
+        </div>
+        </div>
+        <div class="field">
+          <label for="count">Spieler</label>
+          <div class="player-count-wrap" style="position:relative">
+            <input id="count" type="number" min="2" step="1" value="4" inputmode="numeric" style="padding-right:44px">
+            <button id="countDrop" type="button" aria-label="Spieleranzahl auswählen"
+                    style="position:absolute;right:1px;top:1px;bottom:1px;width:42px;border:0;border-left:1px solid #d6dce0;background:#fff;border-radius:0 10px 10px 0;cursor:pointer;font-size:16px">⌄</button>
+            <div id="countMenu"
+                 style="display:none;position:absolute;z-index:20;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid #d6dce0;border-radius:10px;box-shadow:0 10px 24px rgba(0,0,0,.12);max-height:230px;overflow:auto">
+              <button type="button" data-count="2">2</button>
+              <button type="button" data-count="3">3</button>
+              <button type="button" data-count="4">4</button>
+              <button type="button" data-count="5">5</button>
+              <button type="button" data-count="6">6</button>
+              <button type="button" data-count="7">7</button>
+              <button type="button" data-count="8">8</button>
+              <button type="button" data-count="9">9</button>
+              <button type="button" data-count="10">10</button>
+              <button type="button" data-count="11">11</button>
+              <button type="button" data-count="12">12</button>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="start">Startzeit</label>
+          <select id="start"></select>
+        </div>
+        <div class="field">
+          <label for="end">Endzeit</label>
+          <select id="end"></select>
+        </div>
+      </div>
+
+      <div class="warning" id="warning">Die Endzeit muss nach der Startzeit liegen.</div>
+
+      <div class="sep"></div>
+
+      <div class="players-head">
+        <strong>Spieler & Status</strong>
+        <span class="badge" id="playerBadge">4</span>
+      </div>
+      <div id="players"></div>
+    </section>
+
+    <aside class="card summary">
+      <h2>Berechnung</h2>
+      <div class="total-box">
+        <div class="kicker">Gesamt</div>
+        <div class="total" id="netTotal">0,00 €</div>
+      </div>
+
+      <div class="detail"><span>Zeit</span><strong id="summaryTime">–</strong></div>
+      <div class="detail"><span>Spieler</span><strong id="summaryPlayers">–</strong></div>
+      <div class="detail"><span>Platzpreis</span><strong id="courtTotal">–</strong></div>
+      
+      <div class="rate-box" id="rateInfo"></div>
+
+      <div class="legend">
+        <strong>Aufteilung</strong><br>
+        Gast / Nichtmitglied: <span id="legendGast"></span><br>
+        Mitglied Padel: <span id="legendPadel"></span><br>
+        Mitglied Tennis: <span id="legendTennis"></span>
+      </div>
+    </aside>
+  </main>
+
+  <div class="footer">Offline-Rechner · keine Datenübertragung · direkt im Browser nutzbar</div>
+</div>
+
+<script src="preise.js"></script>
+<script>
+const TYPES = [
+  {label:"Nichtmitglied / Gast", factor:PREISE.anteile.gast},
+  {label:"Mitglied Padel", factor:PREISE.anteile.padel},
+  {label:"Mitglied Tennis", factor:PREISE.anteile.tennis}
+];
+
+const $ = id => document.getElementById(id);
+const eur = n => n.toLocaleString("de-DE",{style:"currency",currency:"EUR"});
+const durationText = h => {
+  const rounded = Math.round(h * 100) / 100;
+  return `${String(rounded).replace(".",",")} h`;
+};
+
+
+function fillTimeSelects(){
+  const start = $("start");
+  const end = $("end");
+
+  for(let minutes=0; minutes<24*60; minutes+=15){
+    const h = Math.floor(minutes/60);
+    const m = minutes%60;
+    const value = String(h).padStart(2,"0")+":"+String(m).padStart(2,"0");
+    start.add(new Option(value,value));
+    end.add(new Option(value,value));
+  }
+
+  // 24:00 is useful as an end time, but not as a start time.
+  end.add(new Option("24:00","24:00"));
+
+  start.value = "17:00";
+  end.value = "18:30";
+}
+
+function formatDateDisplay(value){
+  if(!value) return "";
+  const [y,m,d] = value.split("-").map(Number);
+  const months = ["JAN","FEB","MAR","APR","MAI","JUN","JUL","AUG","SEP","OKT","NOV","DEZ"];
+  return String(d).padStart(2,"0") + "-" + months[m-1] + "-" + y;
+}
+
+function updateDateDisplay(){
+  $("dateDisplay").value = formatDateDisplay($("date").value);
+}
+
+function setToday(){
+  const d = new Date();
+  const local = new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  $("date").value = local;
+  updateDateDisplay();
+}
+
+function timeToHours(value){
+  const [h,m] = value.split(":").map(Number);
+  return h + m/60;
+}
+
+function rebuildPlayers(){
+  let n = Math.floor(+$("count").value);
+  if(!Number.isFinite(n) || n < 2) n = 2;
+  $("count").value = n;
+  const old = [...document.querySelectorAll(".ptype")].map(x=>x.value);
+  $("players").innerHTML = "";
+  for(let i=0;i<n;i++){
+    const row = document.createElement("div");
+    row.className = "player-row";
+    const opts = TYPES.map((t,idx)=>`<option value="${idx}" ${+(old[i]??0)===idx?"selected":""}>${t.label}</option>`).join("");
+    row.innerHTML = `<div class="num">${i+1}</div><select class="ptype">${opts}</select><div class="price" id="p${i}">–</div>`;
+    $("players").appendChild(row);
+  }
+  $("playerBadge").textContent=n;
+  document.querySelectorAll(".ptype").forEach(el=>el.addEventListener("change",calculate));
+  calculate();
+}
+
+function getBookingData(){
+  const start = timeToHours($("start").value);
+  const end = timeToHours($("end").value);
+  const duration = end - start;
+  return {start,end,duration};
+}
+
+function toMinutes(value){
+  const [h,m] = value.split(":").map(Number);
+  return h*60+m;
+}
+
+function dateValueToNumber(value){
+  const [y,m,d] = value.split("-").map(Number);
+  return y*10000 + m*100 + d;
+}
+
+function tariffAppliesToDate(tariff, dateValue){
+  const n = dateValueToNumber(dateValue);
+  return n >= dateValueToNumber(tariff.startDate)
+      && n <= dateValueToNumber(tariff.endDate);
+}
+
+function dateRangesOverlap(aStart,aEnd,bStart,bEnd){
+  return dateValueToNumber(aStart) <= dateValueToNumber(bEnd)
+      && dateValueToNumber(bStart) <= dateValueToNumber(aEnd);
+}
+
+function validateTariffs(){
+  const groups = [
+    {name:"Mo–Fr", list:PREISE.werktag},
+    {name:"Wochenende", list:PREISE.wochenende}
+  ];
+  const problems = [];
+
+  for(const group of groups){
+    for(let i=0;i<group.list.length;i++){
+      const a = group.list[i];
+
+      if(dateValueToNumber(a.endDate) < dateValueToNumber(a.startDate)){
+        problems.push(`${group.name}: ungültiger Datumsbereich ${a.startDate}–${a.endDate}`);
+      }
+
+      if(toMinutes(a.end) <= toMinutes(a.start)){
+        problems.push(`${group.name}: ungültiger Zeitraum ${a.start}–${a.end}`);
+      }
+
+      for(let j=i+1;j<group.list.length;j++){
+        const b = group.list[j];
+
+        const dateOverlap = dateRangesOverlap(a.startDate,a.endDate,b.startDate,b.endDate);
+        const timeOverlap = toMinutes(a.start) < toMinutes(b.end)
+                         && toMinutes(b.start) < toMinutes(a.end);
+
+        if(dateOverlap && timeOverlap){
+          problems.push(
+            `${group.name}: Überschneidung ` +
+            `${a.startDate}–${a.endDate} ${a.start}–${a.end} / ` +
+            `${b.startDate}–${b.endDate} ${b.start}–${b.end}`
+          );
+        }
+      }
+    }
+  }
+  return problems;
+}
+
+function getCourtPrice(){
+  const date = new Date($("date").value+"T12:00:00");
+  const day = date.getDay();
+  const weekend = day===0 || day===6;
+  const {start,end,duration} = getBookingData();
+
+  if(duration <= 0) return null;
+
+  const dateValue = $("date").value;
+  const tariffs = (weekend ? PREISE.wochenende : PREISE.werktag)
+    .filter(t => tariffAppliesToDate(t, dateValue));
+  if(!tariffs.length){
+    return {error:"Für das gewählte Datum ist keine Preisgestaltung definiert."};
+  }
+
+  const bookingStart = Math.round(start*60);
+  const bookingEnd = Math.round(end*60);
+
+  let total = 0;
+  let covered = 0;
+  const parts = [];
+
+  for(const t of tariffs){
+    const tStart = toMinutes(t.start);
+    const tEnd = toMinutes(t.end);
+    const overlapStart = Math.max(bookingStart,tStart);
+    const overlapEnd = Math.min(bookingEnd,tEnd);
+
+    if(overlapEnd > overlapStart){
+      const hours = (overlapEnd-overlapStart)/60;
+      total += hours*t.price;
+      covered += overlapEnd-overlapStart;
+      parts.push(`${durationText(hours)} × ${eur(t.price)}/h`);
+    }
+  }
+
+  if(covered !== bookingEnd-bookingStart){
+    return {error:"Für einen Teil der gewählten Zeit ist kein Preis definiert."};
+  }
+
+  return {
+    total,
+    text:`${weekend ? "Wochenende" : "Mo–Fr"} · ${parts.join(" + ")}`,
+    duration
+  };
+}
+
+function clearCalculation(){
+  $("netTotal").textContent = "–";
+  $("courtTotal").textContent = "–";
+  $("summaryTime").textContent = "–";
+  $("rateInfo").innerHTML = "Bitte gültige Start- und Endzeit wählen.";
+  document.querySelectorAll(".price").forEach(x=>x.textContent="–");
+}
+
+function calculate(){
+  if(!$("date").value || !$("start").value || !$("end").value) return;
+
+  const n = +$("count").value;
+  const court = getCourtPrice();
+  const warning = $("warning");
+
+  if(!court){
+    warning.textContent = "Die Endzeit muss nach der Startzeit liegen.";
+    warning.style.display = "block";
+    clearCalculation();
+    return;
+  }
+
+  const tariffProblems = validateTariffs();
+  if(tariffProblems.length){
+    warning.textContent = "Preisgestaltung prüfen: " + tariffProblems.join(" | ");
+    warning.style.display = "block";
+    clearCalculation();
+    return;
+  }
+  warning.style.display = "none";
+  if(court.error){
+    warning.textContent = court.error;
+    warning.style.display = "block";
+    clearCalculation();
+    return;
+  }
+
+  const selections = [...document.querySelectorAll(".ptype")];
+  const weights = selections.map(sel => TYPES[+sel.value].factor);
+  const weightSum = weights.reduce((a,b)=>a+b,0);
+
+  selections.forEach((sel,i)=>{
+    const price = court.total * (weights[i] / weightSum);
+    $(`p${i}`).textContent = eur(price);
+  });
+
+  $("netTotal").textContent = eur(court.total);
+  $("courtTotal").textContent = eur(court.total);
+  $("summaryTime").textContent = `${$("start").value}–${$("end").value} · ${durationText(court.duration)}`;
+  $("summaryPlayers").textContent = `${n} Spieler`;
+  $("rateInfo").innerHTML = `${court.text}`;
+}
+
+["start","end"].forEach(id=>$(id).addEventListener("change",calculate));
+$("date").addEventListener("change",()=>{
+  updateDateDisplay();
+  calculate();
+});
+$("dateDisplay").addEventListener("click",()=>{
+  if($("date").showPicker) $("date").showPicker();
+  else $("date").click();
+});
+$("count").addEventListener("change",rebuildPlayers);
+
+$("countDrop").addEventListener("click",(e)=>{
+  e.stopPropagation();
+  const menu = $("countMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+});
+
+$("countMenu").querySelectorAll("button[data-count]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    $("count").value = btn.dataset.count;
+    $("countMenu").style.display = "none";
+    rebuildPlayers();
+  });
+});
+
+document.addEventListener("click",(e)=>{
+  if(!e.target.closest(".player-count-wrap")){
+    $("countMenu").style.display = "none";
+  }
+});
+
+
+$("legendGast").textContent = Math.round(PREISE.anteile.gast*100) + " %";
+$("legendPadel").textContent = Math.round(PREISE.anteile.padel*100) + " %";
+$("legendTennis").textContent = Math.round(PREISE.anteile.tennis*100) + " %";
+
+fillTimeSelects();
+setToday();
+
+const tariffProblems = validateTariffs();
+if(tariffProblems.length){
+  $("warning").textContent = "Preisgestaltung prüfen: " + tariffProblems.join(" | ");
+  $("warning").style.display = "block";
+}
+
+rebuildPlayers();
+</script>
+</body>
+</html>

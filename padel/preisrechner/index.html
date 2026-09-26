@@ -376,7 +376,7 @@ function fillTimeSelects(){
   const start = $("start");
   const end = $("end");
 
-  for(let minutes=0; minutes<24*60; minutes+=15){
+  for(let minutes=0; minutes<24*60; minutes+=30){
     const h = Math.floor(minutes/60);
     const m = minutes%60;
     const value = String(h).padStart(2,"0")+":"+String(m).padStart(2,"0");
@@ -384,11 +384,25 @@ function fillTimeSelects(){
     end.add(new Option(value,value));
   }
 
-  // 24:00 is useful as an end time, but not as a start time.
   end.add(new Option("24:00","24:00"));
 
-  start.value = "17:00";
-  end.value = "18:30";
+  // Wie bei einer Parkscheibe: auf die nächste halbe Stunde stellen.
+  const now = new Date();
+  let startMinutes = now.getHours()*60 + now.getMinutes();
+  startMinutes = Math.ceil(startMinutes/30)*30;
+  if(startMinutes >= 24*60) startMinutes = 23*60+30;
+
+  const timeValue = minutes => {
+    const h = Math.floor(minutes/60);
+    const m = minutes%60;
+    return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0");
+  };
+
+  start.value = timeValue(startMinutes);
+
+  // Bisherige Standarddauer: 1,5 Stunden.
+  const endMinutes = Math.min(startMinutes+90,24*60);
+  end.value = timeValue(endMinutes);
 }
 
 function formatDateDisplay(value){
@@ -599,7 +613,15 @@ function calculate(){
   $("rateInfo").innerHTML = `${court.text}`;
 }
 
-["start","end"].forEach(id=>$(id).addEventListener("change",calculate));
+$("start").addEventListener("change",()=>{
+  const startMinutes = toMinutes($("start").value);
+  const endMinutes = Math.min(startMinutes + 90, 24*60);
+  const h = Math.floor(endMinutes/60);
+  const m = endMinutes%60;
+  $("end").value = String(h).padStart(2,"0")+":"+String(m).padStart(2,"0");
+  calculate();
+});
+$("end").addEventListener("change",calculate);
 $("date").addEventListener("change",()=>{
   updateDateDisplay();
   calculate();

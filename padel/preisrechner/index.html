@@ -277,6 +277,14 @@ input:focus,select:focus{
   <main class="content">
     <section class="card">
       <h2>Buchung</h2>
+      <div class="field" style="margin-bottom:16px">
+        <label for="courts">Plätze</label>
+        <select id="courts">
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
       <div class="grid">
         <div class="field">
           <label for="date">Datum</label>
@@ -338,9 +346,11 @@ input:focus,select:focus{
         <div class="total" id="netTotal">0,00 €</div>
       </div>
 
+      <div class="detail"><span>Datum</span><strong id="summaryDate">–</strong></div>
       <div class="detail"><span>Zeit</span><strong id="summaryTime">–</strong></div>
+      <div class="detail"><span>Plätze</span><strong id="summaryCourts">1 Platz</strong></div>
       <div class="detail"><span>Spieler</span><strong id="summaryPlayers">–</strong></div>
-      <div class="detail"><span>Platzpreis</span><strong id="courtTotal">–</strong></div>
+      <div class="detail"><span>Platzpreis gesamt</span><strong id="courtTotal">–</strong></div>
       
       <div class="rate-box" id="rateInfo"></div>
 
@@ -597,20 +607,25 @@ function calculate(){
     return;
   }
 
+  const courtCount = Math.max(1, Math.min(3, +$("courts").value || 1));
+  const totalCourtPrice = court.total * courtCount;
+
   const selections = [...document.querySelectorAll(".ptype")];
   const weights = selections.map(sel => TYPES[+sel.value].factor);
   const weightSum = weights.reduce((a,b)=>a+b,0);
 
   selections.forEach((sel,i)=>{
-    const price = court.total * (weights[i] / weightSum);
+    const price = totalCourtPrice * (weights[i] / weightSum);
     $(`p${i}`).textContent = eur(price);
   });
 
-  $("netTotal").textContent = eur(court.total);
-  $("courtTotal").textContent = eur(court.total);
+  $("netTotal").textContent = eur(totalCourtPrice);
+  $("courtTotal").textContent = eur(totalCourtPrice);
+  $("summaryDate").textContent = formatDateDisplay($("date").value);
   $("summaryTime").textContent = `${$("start").value}–${$("end").value} · ${durationText(court.duration)}`;
+  $("summaryCourts").textContent = `${courtCount} ${courtCount === 1 ? "Platz" : "Plätze"}`;
   $("summaryPlayers").textContent = `${n} Spieler`;
-  $("rateInfo").innerHTML = `${court.text}`;
+  $("rateInfo").innerHTML = `${court.text} · ${courtCount} ${courtCount === 1 ? "Platz" : "Plätze"}`;
 }
 
 $("start").addEventListener("change",()=>{
@@ -622,6 +637,7 @@ $("start").addEventListener("change",()=>{
   calculate();
 });
 $("end").addEventListener("change",calculate);
+$("courts").addEventListener("change",calculate);
 $("date").addEventListener("change",()=>{
   updateDateDisplay();
   calculate();

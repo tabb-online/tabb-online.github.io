@@ -246,7 +246,7 @@ input:focus,select:focus{
   .total{font-size:40px}
 }
 
-#countMenu button{
+#countMenu button, #courtsMenu button{
   display:block;
   width:100%;
   padding:10px 12px;
@@ -256,7 +256,7 @@ input:focus,select:focus{
   font-size:16px;
   cursor:pointer;
 }
-#countMenu button:hover{
+#countMenu button:hover, #courtsMenu button:hover{
   background:var(--tabb-blue-light);
 }
 
@@ -279,11 +279,17 @@ input:focus,select:focus{
       <h2>Buchung</h2>
       <div class="field" style="margin-bottom:16px">
         <label for="courts">Plätze</label>
-        <select id="courts">
-          <option value="1" selected>1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
+        <div class="court-count-wrap" style="position:relative">
+          <input id="courts" type="number" min="1" step="1" value="1" inputmode="numeric" style="padding-right:44px">
+          <button id="courtsDrop" type="button" aria-label="Platzanzahl auswählen"
+                  style="position:absolute;right:1px;top:1px;bottom:1px;width:42px;border:0;border-left:1px solid #d6dce0;background:#fff;border-radius:0 10px 10px 0;cursor:pointer;font-size:16px">⌄</button>
+          <div id="courtsMenu"
+               style="display:none;position:absolute;z-index:20;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid #d6dce0;border-radius:10px;box-shadow:0 10px 24px rgba(0,0,0,.12);max-height:230px;overflow:auto">
+            <button type="button" data-courts="1">1</button>
+            <button type="button" data-courts="2">2</button>
+            <button type="button" data-courts="3">3</button>
+          </div>
+        </div>
       </div>
       <div class="grid">
         <div class="field">
@@ -356,7 +362,7 @@ input:focus,select:focus{
 
       <div class="legend">
         <strong>Aufteilung</strong><br>
-        Gast / Nichtmitglied: <span id="legendGast"></span><br>
+        Nichtmitglied / Gast: <span id="legendGast"></span><br>
         Mitglied Padel: <span id="legendPadel"></span><br>
         Mitglied Tennis: <span id="legendTennis"></span>
       </div>
@@ -369,7 +375,7 @@ input:focus,select:focus{
 <script src="preise.js"></script>
 <script>
 const TYPES = [
-  {label:"Gast / Nichtmitglied", factor:PREISE.anteile.gast},
+  {label:"Nichtmitglied / Gast", factor:PREISE.anteile.gast},
   {label:"Mitglied Padel", factor:PREISE.anteile.padel},
   {label:"Mitglied Tennis", factor:PREISE.anteile.tennis}
 ];
@@ -607,7 +613,7 @@ function calculate(){
     return;
   }
 
-  const courtCount = Math.max(1, Math.min(3, +$("courts").value || 1));
+  const courtCount = Math.max(1, Math.floor(+$("courts").value || 1));
   const totalCourtPrice = court.total * courtCount;
 
   const selections = [...document.querySelectorAll(".ptype")];
@@ -637,7 +643,26 @@ $("start").addEventListener("change",()=>{
   calculate();
 });
 $("end").addEventListener("change",calculate);
-$("courts").addEventListener("change",calculate);
+$("courts").addEventListener("change",()=>{
+  let n = Math.floor(+$("courts").value);
+  if(!Number.isFinite(n) || n < 1) n = 1;
+  $("courts").value = n;
+  calculate();
+});
+
+$("courtsDrop").addEventListener("click",(e)=>{
+  e.stopPropagation();
+  const menu = $("courtsMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+});
+
+$("courtsMenu").querySelectorAll("button[data-courts]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    $("courts").value = btn.dataset.courts;
+    $("courtsMenu").style.display = "none";
+    calculate();
+  });
+});
 $("date").addEventListener("change",()=>{
   updateDateDisplay();
   calculate();
@@ -665,6 +690,9 @@ $("countMenu").querySelectorAll("button[data-count]").forEach(btn=>{
 document.addEventListener("click",(e)=>{
   if(!e.target.closest(".player-count-wrap")){
     $("countMenu").style.display = "none";
+  }
+  if(!e.target.closest(".court-count-wrap")){
+    $("courtsMenu").style.display = "none";
   }
 });
 

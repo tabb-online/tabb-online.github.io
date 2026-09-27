@@ -1,7 +1,7 @@
 // TABB Mannschaftsspiele – DIESE DATEI AUF GITHUB PFLEGEN
 window.TABB_SPIELPLAN = {
   date: "2026-09-25",
-  courtCount: 6,
+  courtCount: 12,
 
   matches: [
     { court: 1, start: "09:00", end: "13:00", home: "Herren 40", away: "TC Musterstadt" },
@@ -10,3 +10,7 @@ window.TABB_SPIELPLAN = {
     { court: 1, start: "14:00", end: "18:00", home: "Test Herren 40", away: "Test TC Musterstadt" }
   ]
 };
+
+
+// Display settings
+window.TABB_DISPLAY_SETTINGS = { pageSeconds: 10, courtsPerPage: 6 };

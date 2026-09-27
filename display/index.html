@@ -1,43 +1,51 @@
-<!DOCTYPE html>
+<!--
+TABB Display POC
+Version: v11
+-->
+<!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TABB · Mannschaftsspiele</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TABB · Mannschaftsspiele</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="screen">
   <header class="topbar">
-    <div class="brand-block">
-      <div>
-        <div class="eyebrow">Tennisabteilung · SV Böblingen</div>
-        <img class="tabb-logo" src="tabb-logo.png" alt="TABB – Tennisabteilung der SV Böblingen">\n      <h1 id="headline">Mannschaftsspiele</h1>
-        <div id="displayDate" class="date"></div>
-      </div>
+    <div>
+      <div class="eyebrow">Tennisabteilung · SV Böblingen</div>
+      <img class="tabb-logo" src="tabb-logo.png" alt="TABB – Tennisabteilung der SV Böblingen">
+      <h1>Mannschaftsspiele</h1>
+      <div id="displayDate" class="date"></div>
     </div>
+    <div class="clock"><strong id="clock">--:--</strong></div>
   </header>
 
-  <div class="accent-line"></div>
+  <section class="sponsor-band">
+    <div class="sponsor-label">Unsere Partner</div>
+    <div class="marquee"><div id="marqueeTrack" class="marquee-track"></div></div>
+  </section>
 
   <main>
-    <section id="displayView">
-      <div class="intro-strip">
-        <div>
-          <strong>Herzlich willkommen auf unserer Anlage.</strong>
-          <span>Hier sehen Sie die heutigen Mannschaftsbegegnungen und Platzbelegungen.</span>
-        </div>
-        <div class="tennis-dot">●</div>
+    <div class="intro-strip">
+      <div>
+        <strong>Herzlich willkommen auf unserer Anlage.</strong>
+        <span>Hier sehen Sie die heutigen Mannschaftsbegegnungen und Platzbelegungen.</span>
       </div>
-      <div id="courtGrid" class="court-grid"></div>
-      <div id="emptyState" class="empty-state hidden">
-        <div class="ball">🎾</div>
-        <h2>Heute keine Begegnungen</h2>
-        <p>Für dieses Datum sind noch keine Spiele eingetragen.</p>
-      </div>
+      <div id="pageIndicator" class="page-indicator"></div>
+    </div>
+
+    <div id="courtPages" class="court-pages"></div>
+
+    <section id="sponsorFill" class="sponsor-fill hidden">
+      <h2>Heute keine Begegnungen</h2>
+      <p>Für dieses Datum sind noch keine Spiele eingetragen.</p>
+      <div id="sponsorWall" class="sponsor-wall"></div>
     </section>
   </main>
-
-  <script src="spielplan.js"></script>
-  <script src="app.js"></script>
+</div>
+<script src="spielplan.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

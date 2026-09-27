@@ -1,240 +1,90 @@
-* { box-sizing: border-box; }
 
-:root {
-  --bg: #f4f4f2;
-  --surface: #ffffff;
-  --surface-soft: #f7f7f5;
-  --text: #2e3133;
-  --muted: #75797b;
-  --line: #dedfdb;
-  --accent: #1f5f99;
-  --accent-dark: #174b79;
-  --charcoal: #323638;
-  --danger: #b84949;
-  --shadow: 0 10px 28px rgba(30, 34, 34, .08);
+*{box-sizing:border-box}
+:root{
+ --bg:#f4f4f2;--surface:#fff;--surface-soft:#f7f7f5;--text:#2e3133;
+ --muted:#75797b;--line:#dedfdb;--accent:#0070c0;--accent-dark:#174b79;
+ --shadow:0 6px 18px rgba(30,34,34,.08);
 }
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--text)}
+.screen{width:100vw;height:100vh;overflow:hidden;display:grid;grid-template-rows:auto auto 1fr;background:var(--bg)}
 
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:1.4vh 3vw 1vh;background:#f7f9fc;border-bottom:5px solid #0057a8}
+.eyebrow{font-size:clamp(9px,1.2vw,14px);letter-spacing:.13em;text-transform:uppercase;color:#0070c0;font-weight:800}
+.tabb-logo{display:block;height:clamp(34px,5.2vh,58px);width:auto;max-width:45vw;object-fit:contain;margin:.4vh 0}
+h1{margin:.2vh 0;font-size:clamp(25px,4vw,44px);font-weight:500;color:#173b68}
+.date{color:#5f6f82;font-size:clamp(11px,1.5vw,17px)}
+.clock strong{font-size:clamp(24px,3.8vw,42px);color:#173b68}
 
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 22px clamp(20px, 4vw, 58px);
-  background: #fff;
-}
+.sponsor-band{background:#fff;border-bottom:1px solid var(--line);padding:.45vh 0 .65vh;overflow:hidden}
+.sponsor-label{padding:0 3vw .35vh;font-size:clamp(9px,1.1vw,13px);font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.marquee{overflow:hidden;width:100%}
+.marquee-track{display:flex;gap:10px;width:max-content;padding-left:10px;animation:marquee 34s linear infinite}
+.sponsor-tile{flex:0 0 auto;width:clamp(95px,15vw,165px);height:clamp(46px,7vh,76px);background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.sponsor-tile img{width:100%;height:100%;object-fit:contain}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-.brand-block { display: flex; align-items: center; gap: 18px; }
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: var(--charcoal);
-  color: white;
-  font-weight: 900;
-  letter-spacing: .04em;
-  border: 5px solid var(--accent);
-}
-.brand-mark.large { width: 86px; height: 86px; margin-bottom: 18px; }
+main{min-height:0;overflow:hidden;padding:1vh 3vw 1.2vh;display:grid;grid-template-rows:auto 1fr}
+.intro-strip{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border-left:6px solid #1f5f99;padding:.9vh 1.4vw;margin-bottom:1vh;min-height:62px;box-shadow:var(--shadow)}
+.intro-strip strong{display:block;margin-bottom:.25vh;font-size:clamp(13px,1.8vw,20px)}
+.intro-strip span{color:var(--muted);font-size:clamp(10px,1.4vw,16px)}
+.page-indicator{color:var(--muted);font-weight:700;white-space:nowrap}
 
-.eyebrow, .section-kicker {
-  font-size: .74rem;
-  letter-spacing: .13em;
-  text-transform: uppercase;
-  color: var(--muted);
+.court-pages{min-height:0;width:100%;height:100%;overflow:hidden}
+.court-page{
+ width:100%;height:100%;overflow:hidden;
+ display:grid;
+ grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+ grid-template-rows:repeat(3,minmax(0,1fr));
+ gap:1vh 1vw;
 }
+.court-page.hidden{display:none}
+.court-card{min-width:0;min-height:0;overflow:hidden;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);display:grid;grid-template-rows:auto 1fr}
+.court-head{min-width:0;padding:.65vh .9vw;background:#0070c0;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:4px solid #1f5f99}
+.court-number{font-weight:700;font-size:clamp(16px,2.1vw,25px);min-width:0}
+.court-status{font-size:clamp(9px,1.1vw,13px);color:#e9f5ff;white-space:nowrap}
+.match-list{min-width:0;min-height:0;padding:.55vh .65vw;overflow:hidden}
+.match{min-width:0;border-left:4px solid #1f5f99;background:var(--surface-soft);padding:.55vh .7vw;margin-bottom:.45vh;overflow:hidden}
+.match:last-child{margin-bottom:0}
+.match-time{font-size:clamp(11px,1.45vw,17px);font-weight:700;color:var(--accent-dark);margin-bottom:.3vh;white-space:normal}
+.team-row{min-width:0;display:grid;grid-template-columns:3.3em minmax(0,1fr);gap:.55vw;align-items:center;margin:.2vh 0}
+.team-label{font-size:clamp(8px,.95vw,11px);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.team{min-width:0;font-size:clamp(11px,1.45vw,18px);font-weight:700;overflow-wrap:anywhere}
+.free-court{display:grid;place-items:center;min-height:0;color:var(--muted);text-align:center;padding:10px}
+.empty-slot{visibility:hidden;min-width:0;min-height:0}
 
-h1, h2, h3, p { margin-top: 0; }
-h1 { margin: 4px 0 3px; font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 500; }
-h2 { font-weight: 500; }
-h3 { font-size: 1.1rem; font-weight: 600; }
-.date { color: var(--muted); }
+.sponsor-fill{min-height:0;background:#fff;padding:1.5vh 2vw;text-align:center;box-shadow:var(--shadow);overflow:hidden}
+.hidden{display:none!important}
+.sponsor-fill h2{font-size:clamp(24px,3.5vw,40px);color:#173b68;margin:.4vh 0}
+.sponsor-fill p{color:var(--muted)}
+.sponsor-wall{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8vh;margin-top:1vh}
+.sponsor-wall .sponsor-tile{width:100%;height:clamp(60px,9vh,95px)}
 
-.accent-line { height: 5px; background: var(--accent); }
-.header-actions { display: flex; gap: 10px; }
 
-main { padding: clamp(22px, 3vw, 42px); max-width: 1500px; margin: 0 auto; }
-
-.intro-strip {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  background: #fff;
-  border-left: 6px solid var(--accent);
-  padding: 18px 22px;
-  margin-bottom: 22px;
-  box-shadow: var(--shadow);
+/* v9: visual page-change countdown */
+.page-indicator{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:.65vw;
+  min-width:0;
 }
-.intro-strip strong { display: block; margin-bottom: 5px; font-size: 1.08rem; }
-.intro-strip span { color: var(--muted); }
-.tennis-dot { font-size: 2.8rem; line-height: 1; color: var(--accent); }
-
-.court-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
-  gap: 18px;
+.switch-countdown{
+  display:flex;
+  align-items:center;
+  gap:4px;
 }
-
-.court-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  min-height: 235px;
-  box-shadow: var(--shadow);
+.switch-dot{
+  width:clamp(5px,.65vw,8px);
+  height:clamp(5px,.65vw,8px);
+  border-radius:50%;
+  background:#c9d1d8;
+  transition:background .18s ease, transform .18s ease;
 }
-
-.court-head {
-  padding: 15px 17px;
-  background: var(--charcoal);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 4px solid var(--accent);
+.switch-dot.active{
+  background:#0070c0;
+  transform:scale(1.15);
 }
-.court-number { font-weight: 700; font-size: 1.15rem; }
-.court-status { font-size: .8rem; color: #d7d9da; }
-.match-list { padding: 14px; }
-
-.match {
-  border-left: 4px solid var(--accent);
-  background: var(--surface-soft);
-  padding: 13px 14px;
-  margin-bottom: 10px;
-}
-.match:last-child { margin-bottom: 0; }
-.match-time { font-size: .84rem; font-weight: 700; color: var(--accent-dark); margin-bottom: 9px; }
-.team-row { display: grid; grid-template-columns: 42px 1fr; gap: 10px; align-items: center; margin: 6px 0; }
-.team-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
-.team { font-weight: 700; }
-.free-court { display: grid; place-items: center; min-height: 168px; color: var(--muted); text-align: center; padding: 20px; }
-.free-court .ball { font-size: 2rem; margin-bottom: 8px; }
-
-.admin-head { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
-.panel { background: #fff; border: 1px solid var(--line); padding: 22px; margin-bottom: 18px; box-shadow: var(--shadow); }
-.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
-.form-grid.compact { grid-template-columns: repeat(auto-fit, minmax(180px, 260px)); }
-label { display: flex; flex-direction: column; gap: 7px; font-size: .86rem; font-weight: 700; }
-input, select { width: 100%; border: 1px solid #cfd2ce; background: white; padding: 12px 13px; font: inherit; color: var(--text); }
-input:focus, select:focus { outline: 3px solid rgba(31,95,153,.17); border-color: var(--accent); }
-
-.btn { border: 0; padding: 11px 16px; background: var(--accent); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
-.btn:hover { background: var(--accent-dark); }
-.btn.secondary { background: #eceeeb; color: var(--charcoal); }
-.btn.secondary.dark { background: var(--charcoal); color: #fff; }
-.btn.danger { background: var(--danger); }
-.form-actions { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; }
-
-.admin-list { display: grid; gap: 8px; }
-.admin-item { display: grid; grid-template-columns: 90px 90px 1fr auto; gap: 12px; align-items: center; padding: 12px 14px; background: var(--surface-soft); border-left: 4px solid var(--accent); }
-.admin-item small { color: var(--muted); }
-.icon-btn { border: 0; background: white; padding: 8px 10px; cursor: pointer; }
-.empty-state { min-height: 55vh; display: grid; place-items: center; align-content: center; text-align: center; color: var(--muted); }
-.empty-state .ball { font-size: 4rem; margin-bottom: 10px; }
-
-.login-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: grid;
-  place-items: center;
-  padding: 20px;
-  background: rgba(30,33,34,.72);
-  backdrop-filter: blur(4px);
-}
-.login-card { width: min(430px, 100%); background: white; padding: 30px; border-top: 6px solid var(--accent); box-shadow: 0 24px 70px rgba(0,0,0,.24); }
-.login-card p { color: var(--muted); }
-.login-card form { display: grid; gap: 15px; }
-.login-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 5px; }
-.login-error { color: #a52f2f; background: #faeaea; padding: 10px 12px; font-size: .86rem; }
-.hidden { display: none !important; }
-
-@media (max-width: 700px) {
-  .topbar { align-items: flex-start; flex-direction: column; }
-  .brand-block { align-items: flex-start; }
-  .brand-mark { width: 58px; height: 58px; flex: 0 0 auto; }
-  .header-actions { width: 100%; }
-  .header-actions .btn { flex: 1; }
-  .admin-item { grid-template-columns: 1fr; }
-  .intro-strip { align-items: flex-start; }
-}
-
-/* v5: prominent TABB-blue surfaces */
-.topbar {
-  background: #0057A8 !important;
-}
-.court-head {
-  background: #0070C0 !important;
-}
-.btn {
-  background: #0070C0 !important;
-}
-.btn:hover {
-  background: #0057A8 !important;
-}
-.btn.secondary {
-  background: rgba(255,255,255,.16) !important;
-  border-color: rgba(255,255,255,.35) !important;
-}
-
-/* v6: lighter, more readable header while retaining TABB blue */
-.topbar {
-  background: #f7f9fc !important;
-  color: #173b68 !important;
-  border-bottom: 4px solid #0057A8;
-  box-shadow: 0 8px 22px rgba(22, 63, 120, 0.08) !important;
-}
-.topbar .eyebrow {
-  color: #0070C0 !important;
-  opacity: 1 !important;
-  font-weight: 800;
-}
-.topbar h1 {
-  color: #173b68 !important;
-}
-.topbar .date {
-  color: #5f6f82 !important;
-  opacity: 1 !important;
-}
-.topbar .btn.secondary {
-  background: #ffffff !important;
-  color: #0057A8 !important;
-  border: 1px solid #b9cce2 !important;
-}
-.topbar .btn.secondary:hover {
-  background: #eaf1fa !important;
-}
-.topbar .btn:not(.secondary) {
-  background: #0070C0 !important;
-  color: #ffffff !important;
-}
-.court-head {
-  background: #0070C0 !important;
-  color: #ffffff !important;
-}
-
-/* v7: original TABB logo in header */
-.tabb-logo {
-  display: block;
-  width: auto;
-  height: 46px;
-  max-width: min(260px, 55vw);
-  object-fit: contain;
-  object-position: left center;
-  margin: 0 0 10px 0;
-}
-@media (max-width: 700px) {
-  .tabb-logo {
-    height: 40px;
-    max-width: 220px;
-  }
+.page-number{
+  min-width:2.5em;
+  text-align:right;
 }

@@ -1,27 +1,42 @@
-TABB MANNSCHAFTSSPIELE – GitHub Pages
+TABB Display POC v11
 
-Dateien:
-- index.html
-- style.css
-- app.js
-- spielplan.js   <- hier werden die Daten gepflegt
-- tabb-logo.png
+Neu aufgebaut nach der gewünschten festen Logik:
 
-Änderungen:
-Die bisherige Browser-Speicherung über localStorage und der Pflege-Login wurden entfernt.
-Der Spielplan liegt jetzt zentral in spielplan.js.
+Browserfenster = 100 % Breite und 100 % Höhe.
 
-Pflege auf GitHub:
-1. spielplan.js im Repository öffnen.
-2. Bearbeiten (Stift/Edit).
-3. Datum, Platzanzahl oder Begegnungen ändern.
-4. Änderung committen.
-5. GitHub Pages liefert danach den neuen Stand aus.
+Seite 1:
+Platz 1 | Platz 2
+Platz 3 | Platz 4
+Platz 5 | Platz 6
 
-Beispiel:
-{ court: 1, start: "09:00", end: "13:00", home: "Herren 40", away: "TC Musterstadt" }
+Seite 2:
+Platz 7 | Platz 8
+Platz 9 | Platz 10
+Platz 11 | Platz 12
 
-date: Format JJJJ-MM-TT
-courtCount: Anzahl der Plätze
+Automatische Weiterschaltung: 10 Sekunden.
 
-Die Seite funktioniert weiterhin lokal per Doppelklick auf index.html.
+Wichtig:
+- Kein horizontales Scrollen.
+- Jede Court-Spalte ist exakt 50 % des verfügbaren Platzbereichs.
+- Die drei Reihen teilen sich die verfügbare Höhe.
+- Header und Sponsorenleiste bleiben stehen.
+- Für den POC ist courtCount in spielplan.js auf 12 gesetzt, damit die Umschaltung 1-6 / 7-12 direkt getestet werden kann.
+- Alle Dateien liegen weiterhin in einem Ordner.
+- Version im index.html: v8
+
+Änderung v9:
+- Vor der Seitenanzeige 1 / 2 bzw. 2 / 2 befindet sich jetzt ein dezenter 10-Punkte-Fortschrittsindikator.
+- Pro Sekunde wird bei der 10-Sekunden-Umschaltung ein weiterer Punkt blau.
+- Sind alle Punkte erreicht, wird auf die nächste Court-Seite geschaltet und der Indikator beginnt von vorn.
+- Dadurch ist aus der Entfernung erkennbar, wann der nächste Seitenwechsel kommt, ohne eine zusätzliche Sekundenanzeige einzublenden.
+
+Änderung v10:
+- Fortschrittsanzeige vor der Seitenzahl von 10 auf 4 Punkte reduziert.
+- Die Anzeige entspricht grob den Zuständen 0 / 25 / 50 / 75 / 100 % bis zum nächsten Seitenwechsel.
+- Seitenwechsel weiterhin nach 10 Sekunden.
+
+Änderung v11:
+- Die fünf sichtbaren Fortschrittszustände 0 / 25 / 50 / 75 / 100 % dauern jetzt gleich lang.
+- Bei 10 Sekunden Seitenzeit: jeweils 2 Sekunden.
+- Damit sind auch die vier vollständig ausgefüllten Punkte 2 Sekunden sichtbar, bevor die Seite wechselt.

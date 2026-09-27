@@ -88,3 +88,31 @@ main{min-height:0;overflow:hidden;padding:1vh 3vw 1.2vh;display:grid;grid-templa
   min-width:2.5em;
   text-align:right;
 }
+
+
+/* v12: Mannschaftsspiele + Spielplandatum belong to the content area,
+   directly below the sponsor strip. Current real date stays with the clock. */
+.clock{text-align:right;white-space:nowrap}
+.clock span{
+  display:block;
+  margin-top:.25vh;
+  color:#5f6f82;
+  font-size:clamp(10px,1.35vw,16px);
+}
+main{
+  grid-template-rows:auto auto 1fr;
+}
+.match-heading{
+  min-width:0;
+  padding:.35vh 0 .8vh;
+}
+.match-heading h1{
+  margin:0 0 .15vh;
+  font-size:clamp(25px,4vw,44px);
+  font-weight:500;
+  color:#173b68;
+}
+.match-heading .date{
+  color:#5f6f82;
+  font-size:clamp(11px,1.5vw,17px);
+}

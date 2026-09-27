@@ -101,5 +101,9 @@ function buildPages(){
    },1000);
  }
 }
-function clock(){document.getElementById("clock").textContent=new Date().toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"})}
+function clock(){
+ const now=new Date();
+ document.getElementById("clock").textContent=now.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});
+ document.getElementById("currentDate").textContent=now.toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"});
+}
 buildSponsors();buildPages();clock();setInterval(clock,30000);

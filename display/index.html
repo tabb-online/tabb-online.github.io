@@ -1,6 +1,6 @@
 <!--
 TABB Display POC
-Version: v11
+Version: v12
 -->
 <!doctype html>
 <html lang="de">
@@ -16,10 +16,11 @@ Version: v11
     <div>
       <div class="eyebrow">Tennisabteilung · SV Böblingen</div>
       <img class="tabb-logo" src="tabb-logo.png" alt="TABB – Tennisabteilung der SV Böblingen">
-      <h1>Mannschaftsspiele</h1>
-      <div id="displayDate" class="date"></div>
     </div>
-    <div class="clock"><strong id="clock">--:--</strong></div>
+    <div class="clock">
+      <strong id="clock">--:--</strong>
+      <span id="currentDate">--</span>
+    </div>
   </header>
 
   <section class="sponsor-band">
@@ -28,6 +29,11 @@ Version: v11
   </section>
 
   <main>
+    <section class="match-heading">
+      <h1>Mannschaftsspiele</h1>
+      <div id="displayDate" class="date"></div>
+    </section>
+
     <div class="intro-strip">
       <div>
         <strong>Herzlich willkommen auf unserer Anlage.</strong>
